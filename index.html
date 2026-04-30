@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TriLingPro | 中英西三语专业词典</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#0D2C39',
+            neutral: '#F8F8F8',
+            dark: '#121212',
+            gray: '#666666'
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .card-shadow { @apply shadow-sm hover:shadow-md transition-all duration-300; }
+      .input-clean { @apply bg-white border-0 rounded-lg px-5 py-4 text-lg outline-none focus:ring-1 focus:ring-primary/30; }
+      .text-balance { text-wrap: balance; }
+      .lang-btn { @apply px-2 py-1 rounded hover:bg-primary/10 transition-colors cursor-pointer text-sm; }
+      .action-btn { @apply px-4 py-2 rounded-lg flex items-center gap-2 text-sm transition-all hover:bg-primary/10; }
+      .field-tag {
+        @apply px-3 py-1 bg-white rounded-full text-sm text-gray hover:bg-primary/5 cursor-pointer transition-colors;
+      }
+      .field-tag.active {
+        @apply bg-primary/10 text-primary;
+      }
+    }
+  </style>
+</head>
+<body class="bg-neutral text-dark min-h-screen">
+  <nav class="w-full bg-white py-4 px-6 md:px-12 flex justify-between items-center card-shadow">
+    <div class="text-xl font-semibold text-primary flex items-center gap-2">
+      <i class="fa fa-language"></i>
+      <span>TriLingPro</span>
+    </div>
+    <div class="hidden md:flex items-center gap-6 text-gray">
+      <a class="hover:text-primary transition-colors" href="index.html" data-i18n="nav.home">首页</a>
+      <a class="hover:text-primary transition-colors" href="#" data-i18n="nav.fields">领域库</a>
+      <a class="hover:text-primary transition-colors" href="favorite.html" data-i18n="nav.favorite">收藏</a>
+      <a class="hover:text-primary transition-colors" href="#" data-i18n="nav.about">关于</a>
+      <div class="flex gap-1 border-l border-gray/20 pl-4">
+        <span class="lang-btn" onclick="changeLanguage('zh-CN')">中文</span>
+        <span class="lang-btn" onclick="changeLanguage('en')">EN</span>
+        <span class="lang-btn" onclick="changeLanguage('es')">ES</span>
+      </div>
+    </div>
+    <button class="text-gray hover:text-primary transition-colors md:hidden flex items-center gap-3">
+      <span class="lang-btn text-xs" onclick="changeLanguage('zh-CN')">中</span>
+      <span class="lang-btn text-xs" onclick="changeLanguage('en')">EN</span>
+      <i class="fa fa-bars text-xl"></i>
+    </button>
+  </nav>
+
+<main class="max-w-5xl mx-auto px-6 pt-16 md:pt-28 pb-20">
+  <div class="text-center mb-12">
+    <h1 class="text-[clamp(2rem,5vw,3.5rem)] font-bold leading-tight text-balance" data-i18n="title.main">
+      中英西三语<br class="md:hidden"/>专业术语词典
+    </h1>
+    <p class="text-gray mt-4 text-lg md:text-xl max-w-2xl mx-auto" data-i18n="title.sub">
+      覆盖全学科领域 · 为专业人士打造的精准术语查询工具
+    </p>
+  </div>
+
+  <div class="max-w-3xl mx-auto mb-10">
+    <div class="relative flex items-center">
+      <input type="text" id="searchInput"
+             class="input-clean w-full pr-14 text-[clamp(1rem,2vw,1.1rem)]"
+             data-i18n="search.placeholder"
+             placeholder="输入中文 / English / Español 术语…">
+      <button id="searchBtn" class="absolute right-4 text-primary text-xl">
+        <i class="fa fa-search"></i>
+      </button>
+    </div>
+
+    <div class="flex flex-wrap gap-2 mt-4 justify-center" id="fieldTags">
+      <span class="field-tag" data-field="计算机" data-i18n="field.computer">计算机</span>
+      <span class="field-tag" data-field="医学" data-i18n="field.medical">医学</span>
+      <span class="field-tag" data-field="金融学" data-i18n="field.finance">金融学</span>
+      <span class="field-tag" data-field="生物学" data-i18n="field.biology">生物学</span>
+      <span class="field-tag" data-field="法学" data-i18n="field.law">法学</span>
+      <span class="field-tag" data-field="化学" data-i18n="field.chem">化学</span>
+      <span class="field-tag" data-i18n="field.more">+ 更多领域</span>
+    </div>
+  </div>
+
+  <div id="fieldResult" class="max-w-3xl mx-auto mt-10 hidden">
+    <h3 class="text-lg font-bold mb-4" data-i18n="result.title">该领域术语列表</h3>
+    <div id="termList" class="grid gap-3"></div>
+  </div>
+
+  <div class="grid md:grid-cols-3 gap-6 mt-16">
+    <div class="bg-white p-8 rounded-2xl card-shadow">
+      <div class="text-primary text-2xl mb-3"><i class="fa fa-globe"></i></div>
+      <h3 class="text-lg font-bold mb-2" data-i18n="card1.title">三语互通</h3>
+      <p class="text-gray" data-i18n="card1.desc">中文 ↔ 英文 ↔ 西班牙语，任意输入智能识别</p>
+    </div>
+    <div class="bg-white p-8 rounded-2xl card-shadow">
+      <div class="text-primary text-2xl mb-3"><i class="fa fa-book"></i></div>
+      <h3 class="text-lg font-bold mb-2" data-i18n="card2.title">全领域覆盖</h3>
+      <p class="text-gray" data-i18n="card2.desc">计算机、医学、金融、生物、化学、法学等全学科支持</p>
+    </div>
+    <div class="bg-white p-8 rounded-2xl card-shadow">
+      <div class="text-primary text-2xl mb-3"><i class="fa fa-bolt"></i></div>
+      <h3 class="text-lg font-bold mb-2" data-i18n="card3.title">极速专业检索</h3>
+      <p class="text-gray" data-i18n="card3.desc">毫秒级响应，权威释义，无广告，专业人士优先</p>
+    </div>
+  </div>
+</main>
+
+<footer class="bg-white py-6 text-center text-gray text-sm">
+  <span data-i18n="footer">TriLingPro Dictionary © 2026 — 专业三语术语工具</span>
+</footer>
+
+<script>
+let termData = [];
+let currentLang = localStorage.getItem('triLangProLang') || 'zh-CN';
+
+const i18nData = {
+  "zh-CN": {"nav.home":"首页","nav.fields":"领域库","nav.favorite":"收藏","nav.about":"关于","title.main":"中英西三语专业术语词典","title.sub":"覆盖全学科领域 · 为专业人士打造的精准术语查询工具","search.placeholder":"输入中文 / English / Español 术语…","field.computer":"计算机","field.medical":"医学","field.finance":"金融学","field.biology":"生物学","field.law":"法学","field.chem":"化学","field.more":"+ 更多领域","card1.title":"三语互通","card1.desc":"中文 ↔ 英文 ↔ 西班牙语，任意输入智能识别","card2.title":"全领域覆盖","card2.desc":"计算机、医学、金融、生物、化学、法学等全学科支持","card3.title":"极速专业检索","card3.desc":"毫秒级响应，权威释义，无广告，专业人士优先","footer":"TriLingPro © 2026","result.title":"该领域术语列表"},
+  "en": {"nav.home":"Home","nav.fields":"Fields","nav.favorite":"Favorites","nav.about":"About","title.main":"Chinese-English-Spanish Professional Dictionary","title.sub":"Covers all disciplines · Precise term query tool for professionals","search.placeholder":"Enter term...","field.computer":"Computer","field.medical":"Medical","field.finance":"Finance","field.biology":"Biology","field.law":"Law","field.chem":"Chemistry","field.more":"+ More","card1.title":"Trilingual","card1.desc":"Chinese ↔ English ↔ Spanish","card2.title":"Full Coverage","card2.desc":"Computer, Medical, Finance, Biology, Chemistry, Law","card3.title":"Fast Search","card3.desc":"Millisecond response, authoritative definition","footer":"TriLingPro © 2026","result.title":"Term List"},
+  "es": {"nav.home":"Inicio","nav.fields":"Campos","nav.favorite":"Favoritos","nav.about":"Acerca","title.main":"Diccionario Profesional Chino-Inglés-Español","title.sub":"Cubre todas las disciplinas","search.placeholder":"Ingrese término...","field.computer":"Informática","field.medical":"Medicina","field.finance":"Finanzas","field.biology":"Biología","field.law":"Derecho","field.chem":"Química","field.more":"+ Más","card1.title":"Trilingüe","card1.desc":"Chino ↔ Inglés ↔ Español","card2.title":"Cobertura Total","card2.desc":"Informática, Medicina, Finanzas, Biología, Química, Derecho","card3.title":"Búsqueda Rápida","card3.desc":"Respuesta rápida, definición autorizada","footer":"TriLingPro © 2026","result.title":"Lista de términos"}
+};
+
+document.documentElement.lang = currentLang;
+
+// 渲染语言
+function renderLanguage() {
+  const elements = document.querySelectorAll('[data-i18n]');
+  elements.forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (i18nData[currentLang][key]) el.innerHTML = i18nData[currentLang][key];
+  });
+}
+
+// 切换语言
+function changeLanguage(lang) {
+  currentLang = lang;
+  localStorage.setItem('triLangProLang', lang);
+  document.documentElement.lang = lang;
+  renderLanguage();
+}
+
+async function loadData() {
+  const res = await fetch('./term-data.json');
+  termData = await res.json();
+}
+
+function toSearch() {
+  const kw = document.getElementById('searchInput').value.trim();
+  if (kw) location.href = `detail.html?keyword=${encodeURIComponent(kw)}`;
+}
+
+function bindFieldClick() {
+  const tags = document.querySelectorAll('.field-tag[data-field]');
+  tags.forEach(t => {
+    t.onclick = () => {
+      tags.forEach(x => x.classList.remove('active'));
+      t.classList.add('active');
+      const field = t.dataset.field;
+      const list = termData.filter(x => x.field === field);
+      const box = document.getElementById('termList');
+      box.innerHTML = '';
+      list.forEach(item => {
+        const d = document.createElement('div');
+        d.className = 'bg-white p-4 rounded-lg hover:bg-primary/5 cursor-pointer transition-colors';
+        d.innerText = item.zh + ' · ' + item.en + ' · ' + item.es;
+        d.onclick = () => location.href = `detail.html?keyword=${encodeURIComponent(item.zh)}`;
+        box.appendChild(d);
+      });
+      document.getElementById('fieldResult').classList.remove('hidden');
+    };
+  });
+}
+
+window.addEventListener('DOMContentLoaded', async () => {
+  await loadData();
+  renderLanguage();
+  document.getElementById('searchBtn').onclick = toSearch;
+  document.getElementById('searchInput').onkeypress = e => e.key === 'Enter' && toSearch();
+  bindFieldClick();
+});
+</script>
+</body>
+</html>

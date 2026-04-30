@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>我的收藏 - TriLingPro</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#0D2C39',
+            neutral: '#F8F8F8',
+            dark: '#121212',
+            gray: '#666666'
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .card-shadow { @apply shadow-sm hover:shadow-md transition-all duration-300; }
+      .term-item { @apply bg-white p-5 rounded-xl shadow-sm hover:bg-primary/5 cursor-pointer transition-colors; }
+      .remove-btn { @apply text-red-500 text-sm hover:text-red-600; }
+    
+
+      .card-shadow { @apply shadow-sm hover:shadow-md transition-all duration-300; }
+      .input-clean { @apply bg-white border-0 rounded-lg px-5 py-4 text-lg outline-none focus:ring-1 focus:ring-primary/30; }
+      .text-balance { text-wrap: balance; }
+      .lang-btn { @apply px-2 py-1 rounded hover:bg-primary/10 transition-colors cursor-pointer text-sm; }
+      .action-btn { @apply px-4 py-2 rounded-lg flex items-center gap-2 text-sm transition-all hover:bg-primary/10; }
+    }
+  </style>
+</head>
+<body class="bg-neutral min-h-screen text-dark">
+
+<nav class="w-full bg-white py-4 px-6 md:px-12 flex justify-between items-center card-shadow">
+    <div class="text-xl font-semibold text-primary flex items-center gap-2">
+      <i class="fa fa-language"></i>
+      <span>TriLingPro</span>
+    </div>
+    <div class="hidden md:flex items-center gap-6 text-gray">
+      <a class="hover:text-primary transition-colors" href="index.html" data-i18n="nav.home">首页</a>
+      <a class="hover:text-primary transition-colors" href="#" data-i18n="nav.fields">领域库</a>
+      <a class="hover:text-primary transition-colors" href="favorite.html" data-i18n="nav.favorite">收藏</a>
+      <a class="hover:text-primary transition-colors" href="#" data-i18n="nav.about">关于</a>
+      <div class="flex gap-1 border-l border-gray/20 pl-4">
+        <span class="lang-btn" onclick="changeLanguage('zh-CN')">中文</span>
+        <span class="lang-btn" onclick="changeLanguage('en')">EN</span>
+        <span class="lang-btn" onclick="changeLanguage('es')">ES</span>
+      </div>
+    </div>
+    <button class="text-gray hover:text-primary transition-colors md:hidden flex items-center gap-3">
+      <span class="lang-btn text-xs" onclick="changeLanguage('zh-CN')">中</span>
+      <span class="lang-btn text-xs" onclick="changeLanguage('en')">EN</span>
+      <i class="fa fa-bars text-xl"></i>
+    </button>
+  </nav>
+
+<main class="max-w-4xl mx-auto px-6 pt-12 pb-20">
+  <div class="flex justify-between items-center mb-8">
+    <h1 class="text-2xl font-bold flex items-center gap-2">
+      <i class="fa fa-heart text-primary"></i>
+      <span data-i18n="fav.title">我的收藏</span>
+    </h1>
+    <button id="clearAll" class="text-sm text-red-500 hover:text-red-600" data-i18n="fav.clearall">
+      清空收藏
+    </button>
+  </div>
+
+  <div id="emptyView" class="text-center py-20 text-gray">
+    <i class="fa fa-heart-o text-4xl mb-4 opacity-30"></i>
+    <p class="text-lg" data-i18n="fav.empty">暂无收藏术语</p>
+    <a href="index.html" class="inline-block mt-6 px-5 py-2 bg-primary text-white rounded-lg" data-i18n="searchforVocabulary">
+      去搜索词汇
+    </a>
+  </div>
+
+  <div id="favList" class="grid gap-3"></div>
+</main>
+
+<script>
+let termData = [];
+let currentLang = localStorage.getItem('triLangProLang') || 'zh-CN';
+
+const i18nData = {
+  "zh-CN": {"nav.home":"首页","nav.fields":"领域库","nav.favorite":"收藏","nav.about":"关于","fav.title":"我的收藏", "fav.empty":"暂无收藏术语", "fav.clearall":"清空收藏", "searchforVocabulary":"去搜索词汇", "unfavorite":"取消收藏", "favorite.clear.confirm": "确定要清空所有收藏吗？"},
+  "en": {"nav.home":"Home","nav.fields":"Fields","nav.favorite":"Favorites","nav.about":"About","fav.title":"My Favorites", "fav.empty":"No favorites yet", "fav.clearall":"Clear favorites", "searchforVocabulary":"search for vocabulary", "unfavorite":"Unfavorite", "favorite.clear.confirm": "Are you sure you want to clear all favorites?"},
+  "es": {"nav.home":"Inicio","nav.fields":"Campos","nav.favorite":"Favoritos","nav.about":"Acerca","fav.title":"Mis Favoritos", "fav.empty":"Sin favoritos", "fav.clearall":"Vaciar favoritos", "searchforVocabulary":"Ir a buscar palabras", "unfavorite":"Cancelar colección", "favorite.clear.confirm": "¿Está seguro de que desea vaciar todos los favoritos?"}
+};
+
+document.documentElement.lang = currentLang;
+
+// 渲染语言
+function renderLanguage() {
+    const elements = document.querySelectorAll('[data-i18n]');
+    elements.forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (i18nData[currentLang][key]) el.innerHTML = i18nData[currentLang][key];
+    });
+}
+
+// 切换语言
+function changeLanguage(lang) {
+    currentLang = lang;
+    localStorage.setItem('triLangProLang', lang);
+    document.documentElement.lang = lang;
+    renderLanguage();
+}
+
+function getFavorites() {
+  return JSON.parse(localStorage.getItem('favorites') || '[]');
+}
+
+function removeFavorite(zh) {
+  let favs = getFavorites();
+  favs = favs.filter(item => item !== zh);
+  localStorage.setItem('favorites', JSON.stringify(favs));
+  renderFavList();
+}
+
+async function loadTermData() {
+  const res = await fetch('./term-data.json');
+  termData = await res.json();
+  renderFavList();
+}
+
+function renderFavList() {
+  const favs = getFavorites();
+  const list = termData.filter(t => favs.includes(t.zh));
+  const box = document.getElementById('favList');
+  const empty = document.getElementById('emptyView');
+
+  if (list.length === 0) {
+    empty.classList.remove('hidden');
+    box.innerHTML = '';
+    return;
+  }
+
+  empty.classList.add('hidden');
+  box.innerHTML = list.map(t => `
+    <div class="term-item flex justify-between items-center">
+      <div onclick="location.href='detail.html?keyword=${encodeURIComponent(t.zh)}'">
+        <div class="font-bold text-lg">${t.zh}</div>
+        <div class="text-gray text-sm mt-1">${t.en} | ${t.es}</div>
+      </div>
+      <button class="remove-btn" onclick="removeFavorite('${t.zh.replace(/'/g, "\\'")}')">
+        <i class="fa fa-trash-o mr-1"></i> <span data-i18n="unfavorite">取消收藏</span>
+      </button>
+    </div>
+  `).join('');
+}
+
+document.getElementById('clearAll').onclick = () => {
+  const confirmText = i18nData[currentLang]?.['favorite.clear.confirm'];
+
+  if (confirmText && confirm(confirmText)) {
+    localStorage.setItem('favorites', '[]');
+    renderFavList();
+  }
+};
+
+window.addEventListener('DOMContentLoaded', async () => {
+  renderLanguage();
+  await loadTermData();
+});
+</script>
+</body>
+</html>

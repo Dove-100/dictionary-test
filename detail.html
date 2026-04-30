@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Term Detail | TriLingPro</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#0D2C39',
+            neutral: '#F8F8F8',
+            dark: '#121212',
+            gray: '#666666'
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .card-shadow { @apply shadow-sm hover:shadow-md transition-all duration-300; }
+      .input-clean { @apply bg-white border-0 rounded-lg px-5 py-4 text-lg outline-none focus:ring-1 focus:ring-primary/30; }
+      .text-balance { text-wrap: balance; }
+      .lang-btn { @apply px-2 py-1 rounded hover:bg-primary/10 transition-colors cursor-pointer text-sm; }
+      .action-btn { @apply px-4 py-2 rounded-lg flex items-center gap-2 text-sm transition-all hover:bg-primary/10; }
+    }
+  </style>
+</head>
+<body class="bg-neutral text-dark min-h-screen">
+  <!-- 通用导航栏 -->
+  <nav class="w-full bg-white py-4 px-6 md:px-12 flex justify-between items-center card-shadow">
+    <div class="text-xl font-semibold text-primary flex items-center gap-2">
+      <i class="fa fa-language"></i>
+      <span>TriLingPro</span>
+    </div>
+    <div class="hidden md:flex items-center gap-6 text-gray">
+      <a class="hover:text-primary transition-colors" href="index.html" data-i18n="nav.home">首页</a>
+      <a class="hover:text-primary transition-colors" href="#" data-i18n="nav.fields">领域库</a>
+      <a class="hover:text-primary transition-colors" href="favorite.html" data-i18n="nav.favorite">收藏</a>
+      <a class="hover:text-primary transition-colors" href="#" data-i18n="nav.about">关于</a>
+      <div class="flex gap-1 border-l border-gray/20 pl-4">
+        <span class="lang-btn" onclick="changeLanguage('zh-CN')">中文</span>
+        <span class="lang-btn" onclick="changeLanguage('en')">EN</span>
+        <span class="lang-btn" onclick="changeLanguage('es')">ES</span>
+      </div>
+    </div>
+    <button class="text-gray hover:text-primary transition-colors md:hidden flex items-center gap-3">
+      <span class="lang-btn text-xs" onclick="changeLanguage('zh-CN')">中</span>
+      <span class="lang-btn text-xs" onclick="changeLanguage('en')">EN</span>
+      <i class="fa fa-bars text-xl"></i>
+    </button>
+  </nav>
+
+  <main class="max-w-4xl mx-auto px-6 pt-12 md:pt-16 pb-20">
+    <!-- 返回按钮 -->
+    <button onclick="history.back()" class="flex items-center gap-2 text-gray mb-8 hover:text-primary transition-colors">
+      <i class="fa fa-arrow-left"></i>
+      <span data-i18n="detail.back">返回</span>
+    </button>
+
+    <!-- 术语详情卡片（核心） -->
+    <div id="termCard" class="bg-white rounded-2xl p-8 md:p-10 card-shadow opacity-0 transition-opacity duration-300">
+      <!-- 领域标签 -->
+      <div class="mb-4">
+        <span id="fieldTag" class="px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-medium"></span>
+      </div>
+
+      <!-- 三语核心术语 -->
+      <div class="border-b border-gray/10 pb-6 mb-6">
+        <h2 id="zhTerm" class="text-3xl md:text-4xl font-bold mb-2"></h2>
+        <div class="flex flex-wrap gap-4 text-lg text-gray">
+          <p><span class="font-medium">EN:</span> <span id="enTerm"></span></p>
+          <p><span class="font-medium">ES:</span> <span id="esTerm"></span></p>
+        </div>
+        <p id="phonetic" class="mt-3 text-primary/80 italic"></p>
+      </div>
+
+      <!-- 专业释义 -->
+      <div class="mb-6">
+        <h3 class="text-lg font-bold mb-2" data-i18n="detail.definition">专业释义</h3>
+        <p id="definition" class="text-gray leading-relaxed"></p>
+      </div>
+
+      <!-- 例句 -->
+      <div class="mb-8">
+        <h3 class="text-lg font-bold mb-2" data-i18n="detail.example">权威例句</h3>
+        <p id="example" class="text-gray leading-relaxed border-l-2 border-primary/30 pl-4 py-1"></p>
+      </div>
+
+      <!-- 操作按钮 -->
+      <div class="flex flex-wrap gap-3">
+        <button id="copyBtn" class="action-btn">
+          <i class="fa fa-copy"></i>
+          <span data-i18n="detail.copy">复制释义</span>
+        </button>
+        <button id="favoriteBtn" class="action-btn">
+          <i class="fa fa-heart-o"></i>
+          <span id="favText" data-i18n="detail.favorite">收藏术语</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- 无结果提示 -->
+    <div id="emptyTip" class="hidden text-center py-20">
+      <i class="fa fa-search text-4xl text-gray/30 mb-4"></i>
+      <h3 class="text-xl font-bold mb-2" data-i18n="detail.empty.title">未找到该术语</h3>
+      <p class="text-gray" data-i18n="detail.empty.desc">请尝试更换关键词，或检查输入是否正确</p>
+      <button onclick="location.href='index.html'" class="mt-6 px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors">
+        <span data-i18n="detail.back.home">返回首页</span>
+      </button>
+    </div>
+  </main>
+
+  <footer class="bg-white py-6 text-center text-gray text-sm">
+    <span data-i18n="footer">TriLingPro Dictionary © 2026 — 专业三语术语工具</span>
+  </footer>
+
+  <script>
+    // 三语数据（新增详情页文案）
+    const i18nData = {
+      "zh-CN": {"nav.home":"首页","nav.fields":"领域库","nav.favorite":"收藏","nav.about":"关于","footer":"TriLingPro Dictionary © 2026 — 专业三语术语工具","detail.back":"返回","detail.definition":"专业释义","detail.example":"权威例句","detail.copy":"复制释义","detail.favorite":"收藏术语","detail.empty.title":"未找到该术语","detail.empty.desc":"请尝试更换关键词，或检查输入是否正确","detail.back.home":"返回首页"},
+      "en": {"nav.home":"Home","nav.fields":"Fields","nav.favorite":"Favorites","nav.about":"About","footer":"TriLingPro Dictionary © 2026 — Professional Trilingual Terminology Tool","detail.back":"Back","detail.definition":"Definition","detail.example":"Example","detail.copy":"Copy","detail.favorite":"Favorite","detail.empty.title":"Term Not Found","detail.empty.desc":"Please try another keyword or check your input","detail.back.home":"Back to Home"},
+      "es": {"nav.home":"Inicio","nav.fields":"Campos","nav.favorite":"Favoritos","nav.about":"Acerca","footer":"TriLingPro Dictionary © 2026 — Herramienta de terminología trilingüe profesional","detail.back":"Volver","detail.definition":"Definición","detail.example":"Ejemplo","detail.copy":"Copiar","detail.favorite":"Guardar","detail.empty.title":"Término no encontrado","detail.empty.desc":"Intente con otra palabra o verifique la entrada","detail.back.home":"Volver al inicio"}
+    };
+
+    let termData = [];
+    let currentTerm = null;
+
+    function getFavorites() {
+      return JSON.parse(localStorage.getItem('favorites') || '[]');
+    }
+
+    function isFavorite(zh) {
+      return getFavorites().includes(zh);
+    }
+
+    function toggleFavorite() {
+      if (!currentTerm) return;
+      const favs = getFavorites();
+      const zh = currentTerm.zh;
+      const newFavs = favs.includes(zh) ? favs.filter(x => x!=zh) : [...favs, zh];
+      localStorage.setItem('favorites', JSON.stringify(newFavs));
+      refreshFavUI();
+    }
+
+    function refreshFavUI() {
+      if (!currentTerm) return;
+      const icon = document.querySelector('#favoriteBtn i');
+      const text = document.getElementById('favText');
+      const ok = isFavorite(currentTerm.zh);
+      icon.className = ok ? 'fa fa-heart' : 'fa fa-heart-o';
+      text.innerText = ok ? '已收藏' : '收藏术语';
+    }
+    
+    async function loadTermData() {
+      try {
+        const response = await fetch('term-data.json');
+        if (!response.ok) {
+          throw new Error('HTTP error! status:${response.status}');
+        }
+        termData = await response.json();
+        console.log('术语数据加载成功，共', termData.length, '条');
+
+        loadTerm();
+      } catch (error) {
+        console.error('加载术语数据失败：', error);
+        const emptyTip = document.getElementById('emptyTip');
+        if (emptyTip) {
+          emptyTip.classList.remove('hidden');
+          emptyTip.innerHTML = '<p>数据加载失败，请刷新页面重试</p>';
+        }
+      }
+    }
+
+    let currentLang = localStorage.getItem('triLangProLang') || 'zh-CN';
+    document.documentElement.lang = currentLang;
+
+    // 渲染语言
+    function renderLanguage() {
+      const elements = document.querySelectorAll('[data-i18n]');
+      elements.forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (i18nData[currentLang][key]) el.innerHTML = i18nData[currentLang][key];
+      });
+    }
+
+    // 切换语言
+    function changeLanguage(lang) {
+      currentLang = lang;
+      localStorage.setItem('triLangProLang', lang);
+      document.documentElement.lang = lang;
+      renderLanguage();
+    }
+
+    // 解析URL参数 + 渲染术语
+    function loadTerm() {
+      const params = new URLSearchParams(window.location.search);
+      const keyword = params.get('keyword')?.trim();
+      const termCard = document.getElementById('termCard');
+      const emptyTip = document.getElementById('emptyTip');
+
+      if(!keyword) {
+        emptyTip.classList.remove('hidden');
+        termCard.style.opacity = '1';
+        return;
+      }
+
+      // 检查数据是否已加载
+      if (termData.length === 0) {
+        // 数据还没加载完，显示加载中
+        emptyTip.classList.remove('hidden');
+        emptyTip.innerHTML = '<p>加载数据中，请稍候...</p>';
+        return;
+      }
+
+      // 匹配术语（支持中英西三语模糊搜索）
+      const term = termData.find(item => 
+        item.zh.includes(keyword) || 
+        item.en.toLowerCase().includes(keyword.toLowerCase()) || 
+        item.es.toLowerCase().includes(keyword.toLowerCase())
+      );
+
+      if(term) {
+        currentTerm = term;
+        document.getElementById('zhTerm').innerText = term.zh;
+        document.getElementById('enTerm').innerText = term.en;
+        document.getElementById('esTerm').innerText = term.es;
+        document.getElementById('fieldTag').innerText = term.field;
+        document.getElementById('phonetic').innerText = term.phonetic;
+        document.getElementById('definition').innerText = term.definition;
+        document.getElementById('example').innerText = term.example;
+        termCard.style.opacity = '1';
+        refreshFavUI();
+      } else {
+        emptyTip.classList.remove('hidden');
+        termCard.style.opacity = '1';
+      }
+    }
+
+    // 复制功能
+    document.getElementById('copyBtn').addEventListener('click', () => {
+      const text = document.getElementById('definition').innerText;
+      navigator.clipboard.writeText(text);
+      alert('复制成功！');
+    });
+
+    // 初始化
+    window.addEventListener('DOMContentLoaded', () => {
+      renderLanguage();
+      loadTermData();
+      document.getElementById('favoriteBtn').onclick = toggleFavorite;
+    });
+  </script>
+</body>
+</html>

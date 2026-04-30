@@ -1,0 +1,363 @@
+{
+  "search-word": "能量",
+  "basic-info": {
+    "chinese": {
+      "text": "能量",
+      "pronouncation": "néng liàng",
+      "partOfSpeech": "名词",
+      "description": "物质做功的能力或物体运动状态的量度。在物理学中，能量是描述系统状态的重要物理量，对应于系统对外做功的能力。"
+    },
+    "english": {
+      "text": "Energy",
+      "pronouncation": "/ˈen.ɚ.dʒi/",
+      "partOfSpeech": "Noun",
+      "description": "The capacity to do work or produce change. In physics, it is a quantitative property that must be transferred to an object to perform work on, or to heat, the object."
+    },
+    "spanish": {
+      "text": "Energía",
+      "pronouncation": "/e.neɾ.ˈxi.a/",
+      "partOfSpeech": "Sustantivo",
+      "description": "Capacidad para realizar un trabajo o producir un cambio. En física, es una magnitud escalar que se asocia al estado de un sistema físico."
+    }
+  },
+  "corpus": {
+    "title": {
+      "chinese": "学科语料库1",
+      "english": "Subject Corpus1",
+      "spanish": "Corpus Temático1"
+    },
+    "tabs": [
+      {
+        "field": "physics",
+        "label": {
+          "chinese": "物理学1",
+          "english": "Physics",
+          "spanish": "Física"
+        },
+        "content": [
+          {
+            "title": {
+              "chinese": "能量守恒定律1",
+              "english": "Law of Conservation of Energy",
+              "spanish": "Ley de Conservación de la Energía"
+            },
+            "description": {
+              "chinese": "在封闭系统中，总能量保持不变，只能从一种形式转化为另一种形式。",
+              "english": "The law of conservation of energy states that the total energy in a closed system remains constant.",
+              "spanish": "La ley de conservación de la energía establece que la energía total en un sistema cerrado permanece constante."
+            },
+            "tags": {
+              "chinese": "物理",
+              "english": "Physics",
+              "spanish": "Física"
+            }
+          },
+          {
+            "title": {
+              "chinese": "动能与势能",
+              "english": "Kinetic and Potential Energy",
+              "spanish": "Energía Cinética y Potencial"
+            },
+            "description": {
+              "chinese": "动能是物体由于运动而具有的能量，势能是物体由于位置或状态而储存的能量。",
+              "english": "Kinetic energy is the energy of motion, while potential energy is stored energy due to position or state.",
+              "spanish": "La energía cinética es la energía del movimiento, mientras que la energía potencial es la energía almacenada debido a la posición o estado."
+            },
+            "tags": {
+              "chinese": "力学",
+              "english": "Mechanics",
+              "spanish": "Mecánica"
+            }
+          }
+        ]
+      },
+      {
+        "field": "biology",
+        "label": {
+          "chinese": "生物学",
+          "english": "Biology",
+          "spanish": "Biología"
+        },
+        "content": [
+          {
+            "title": {
+              "chinese": "光合作用中的能量转换",
+              "english": "Energy Conversion in Photosynthesis",
+              "spanish": "Conversión de Energía en la Fotosíntesis"
+            },
+            "description": {
+              "chinese": "植物通过光合作用将太阳能转化为化学能，储存在葡萄糖分子中。",
+              "english": "Plants convert solar energy into chemical energy through photosynthesis, storing it in glucose molecules.",
+              "spanish": "Las plantas convierten la energía solar en energía química a través de la fotosíntesis, almacenándola en moléculas de glucosa."
+            },
+            "tags": {
+              "chinese": "植物生理",
+              "english": "Plant Physiology",
+              "spanish": "Fisiología Vegetal"
+            }
+          },
+          {
+            "title": {
+              "chinese": "ATP：细胞的能量货币",
+              "english": "ATP: The Energy Currency of the Cell",
+              "spanish": "ATP: La Moneda Energética de la Célula"
+            },
+            "description": {
+              "chinese": "三磷酸腺苷(ATP)是细胞内能量转移的主要分子，为大多数细胞过程提供能量。",
+              "english": "Adenosine triphosphate (ATP) is the primary molecule for energy transfer in cells, powering most cellular processes.",
+              "spanish": "El trifosfato de adenosina (ATP) es la molécula principal para la transferencia de energía en las células, impulsando la mayoría de los procesos celulares."
+            },
+            "tags": {
+              "chinese": "细胞生物学",
+              "english": "Cell Biology",
+              "spanish": "Biología Celular"
+            }
+          }
+        ]
+      },
+      {
+        "field": "medicine",
+        "label": {
+          "chinese": "医学",
+          "english": "Medicine",
+          "spanish": "Medicina"
+        },
+        "content": [
+          {
+            "title": {
+              "chinese": "基础代谢率",
+              "english": "Basal Metabolic Rate",
+              "spanish": "Tasa Metabólica Basal"
+            },
+            "description": {
+              "chinese": "基础代谢率是指人体在静息状态下维持生命所需的最低能量消耗。",
+              "english": "Basal metabolic rate is the minimum amount of energy required to sustain vital functions at rest.",
+              "spanish": "La tasa metabólica basal es la cantidad mínima de energía necesaria para mantener las funciones vitales en reposo."
+            },
+            "tags": {
+              "chinese": "代谢医学",
+              "english": "Metabolic Medicine",
+              "spanish": "Medicina Metabólica"
+            }
+          }
+        ]
+      },
+      {
+        "field": "computer",
+        "label": {
+          "chinese": "计算机科学",
+          "english": "Computer Science",
+          "spanish": "Informática"
+        },
+        "content": [
+          {
+            "title": {
+              "chinese": "能量效率计算",
+              "english": "Energy Efficiency Computing",
+              "spanish": "Cálculo de Eficiencia Energética"
+            },
+            "description": {
+              "chinese": "绿色计算关注的是提高计算机系统的能量效率，减少碳足迹。",
+              "english": "Green computing focuses on improving the energy efficiency of computer systems to reduce carbon footprint.",
+              "spanish": "La informática verde se centra en mejorar la eficiencia energética de los sistemas informáticos para reducir la huella de carbono."
+            },
+            "tags": {
+              "chinese": "绿色计算",
+              "english": "Green Computing",
+              "spanish": "Informática Verde"
+            }
+          }
+        ]
+      },
+      {
+        "field": "finance",
+        "label": {
+          "chinese": "金融",
+          "english": "Finance",
+          "spanish": "Finanzas"
+        },
+        "content": [
+          {
+            "title": {
+              "chinese": "能源金融市场",
+              "english": "Energy Finance Market",
+              "spanish": "Mercado de Finanzas Energéticas"
+            },
+            "description": {
+              "chinese": "能源金融涉及能源商品及其衍生品的交易，包括石油、天然气和电力期货。",
+              "english": "Energy finance involves trading energy commodities and their derivatives, including oil, natural gas, and electricity futures.",
+              "spanish": "Las finanzas energéticas implican el comercio de productos básicos energéticos y sus derivados, incluidos los futuros de petróleo, gas natural y electricidad."
+            },
+            "tags": {
+              "chinese": "商品交易",
+              "english": "Commodity Trading",
+              "spanish": "Comercio de Materias Primas"
+            }
+          }
+        ]
+      },
+      {
+        "field": "chemistry",
+        "label": {
+          "chinese": "化学",
+          "english": "Chemistry",
+          "spanish": "Química"
+        },
+        "content": [
+          {
+            "title": {
+              "chinese": "化学反应中的能量变化",
+              "english": "Energy Changes in Chemical Reactions",
+              "spanish": "Cambios de Energía en Reacciones Químicas"
+            },
+            "description": {
+              "chinese": "化学反应通常伴随着能量的吸收或释放，表现为吸热或放热反应。",
+              "english": "Chemical reactions are usually accompanied by energy absorption or release, manifesting as endothermic or exothermic reactions.",
+              "spanish": "Las reacciones químicas suelen ir acompañadas de absorción o liberación de energía, manifestándose como reacciones endotérmicas o exotérmicas."
+            },
+            "tags": {
+              "chinese": "热化学",
+              "english": "Thermochemistry",
+              "spanish": "Termoquímica"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "language-info": {
+    "title": {
+      "chinese": "语言信息",
+      "english": "Language Information",
+      "spanish": "Información de Idioma"
+    },
+    "labels": {
+      "word": {
+        "chinese": "词条：",
+        "english": "Term：",
+        "spanish": "Término："
+      },
+      "partOfSpeech": {
+        "chinese": "词性：",
+        "english": "Part of Speech：",
+        "spanish": "Categoria Gramatical："
+      },
+      "language": {
+        "chinese": "语言：",
+        "english": "Language：",
+        "spanish": "Idioma："
+      },
+      "chineseEquiv": {
+        "chinese": "中文对应：",
+        "english": "Chinese Equivalent：",
+        "spanish": "Equivalente en Chino："
+      },
+      "spanishEquiv": {
+        "chinese": "西班牙文对应：",
+        "english": "Spanish Equivalent：",
+        "spanish": "Equivalente en Español："
+      },
+      "topic": {
+        "chinese": "主题：",
+        "english": "Topic：",
+        "spanish": "Tema："
+      }
+    },
+    "values": {
+      "word": "energy",
+      "partOfSpeech": {
+        "chinese": "名词",
+        "english": "Noun",
+        "spanish": "Sustantivo"
+      },
+      "language": {
+        "chinese": "英语",
+        "english": "English",
+        "spanish": "Inglés"
+      },
+      "chineseEquiv": "能量",
+      "spanishEquiv": "energía",
+      "topic": {
+        "chinese": "物理、环境、科学",
+        "english": "Physics, Environment, Science",
+        "spanish": "Física, Medio Ambiente, Ciencia"
+      }
+    }
+  },
+  "related-words": {
+    "title": {
+      "chinese": "相关词汇",
+      "english": "Related Words",
+      "spanish": "Palabras Relacionadas"
+    },
+    "list": [
+      {
+        "text": "power",
+        "chinese": "功率",
+        "spanish": "potencia"
+      },
+      {
+        "text": "force",
+        "chinese": "力",
+        "spanish": "fuerza"
+      },
+      {
+        "text": "work",
+        "chinese": "功",
+        "spanish": "trabajo"
+      },
+      {
+        "text": "motion",
+        "chinese": "运动",
+        "spanish": "movimiento"
+      },
+      {
+        "text": "momentum",
+        "chinese": "动量",
+        "spanish": "momento"
+      },
+      {
+        "text": "renewable",
+        "chinese": "可再生的",
+        "spanish": "renovable"
+      }
+    ]
+  },
+  "page-ui": {
+    "logo": {
+      "chinese": "多语言词典",
+      "english": "Multilingual Dictionary",
+      "spanish": "Diccionario Multilingüe"
+    },
+    "search-placeholder": {
+      "chinese": "输入要查询的词条...",
+      "english": "Enter the term to search...",
+      "spanish": "Ingrese el término a buscar..."
+    },
+    "search-btn": {
+      "chinese": "搜索",
+      "english": "Search",
+      "spanish": "Buscar"
+    },
+    "auto-complete-item": {
+      "chinese": "energy n. 能量",
+      "english": "energy n. energy",
+      "spanish": "energy n. energía"
+    },
+    "language-switch": {
+      "chinese": "语言",
+      "english": "Language",
+      "spanish": "Idioma"
+    },
+    "lang-options": {
+      "zh": "中文",
+      "en": "English",
+      "es": "Español"
+    },
+    "footer": {
+      "chinese": "© 2023 多语言词典 | 提供英语、中文、西班牙语等多语言词条解释",
+      "english": "© 2023 Multilingual Dictionary | Provides multilingual term explanations in English, Chinese, and Spanish",
+      "spanish": "© 2023 Diccionario Multilingüe | Ofrece explicaciones de términos multilingües en inglés, chino y español"
+    }
+  }
+}

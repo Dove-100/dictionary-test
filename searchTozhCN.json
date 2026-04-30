@@ -1,0 +1,38 @@
+{
+    "success": true,
+    "msg": "",
+    "keyword": "ene",
+    "to": "zhCN",
+    "data": [
+        {
+            "English": "energy1",
+            "Chinese": "能量",
+            "PartOfSpeech": "n.",
+            "Definition": "物质做功的能力或物体运动状态的量度。在物理学中，能量是描述系统状态的重要物理量，对应于系统对外做功的能力。"
+        },
+        {
+            "English": "energy2",
+            "Chinese": "能量",
+            "PartOfSpeech": "n.",
+            "Definition": "物质做功的能力或物体运动状态的量度。在物理学中，能量是描述系统状态的重要物理量，对应于系统对外做功的能力。"
+        },
+        {
+            "English": "energy3",
+            "Chinese": "能量",
+            "PartOfSpeech": "n.",
+            "Definition": "物质做功的能力或物体运动状态的量度。在物理学中，能量是描述系统状态的重要物理量，对应于系统对外做功的能力。"
+        },
+        {
+            "English": "energy4",
+            "Chinese": "能量",
+            "PartOfSpeech": "n.",
+            "Definition": "物质做功的能力或物体运动状态的量度。在物理学中，能量是描述系统状态的重要物理量，对应于系统对外做功的能力。"
+        },
+        {
+            "English": "energy5",
+            "Chinese": "能量",
+            "PartOfSpeech": "n.",
+            "Definition": "物质做功的能力或物体运动状态的量度。在物理学中，能量是描述系统状态的重要物理量，对应于系统对外做功的能力。"
+        }
+    ]
+}
