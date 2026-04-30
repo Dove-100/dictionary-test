@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -33,6 +34,7 @@
     }
   </style>
 </head>
+
 <body class="bg-neutral text-dark min-h-screen">
   <!-- 通用导航栏 -->
   <nav class="w-full bg-white py-4 px-6 md:px-12 flex justify-between items-center card-shadow">
@@ -60,7 +62,8 @@
 
   <main class="max-w-4xl mx-auto px-6 pt-12 md:pt-16 pb-20">
     <!-- 返回按钮 -->
-    <button onclick="history.back()" class="flex items-center gap-2 text-gray mb-8 hover:text-primary transition-colors">
+    <button onclick="history.back()"
+      class="flex items-center gap-2 text-gray mb-8 hover:text-primary transition-colors">
       <i class="fa fa-arrow-left"></i>
       <span data-i18n="detail.back">返回</span>
     </button>
@@ -112,7 +115,8 @@
       <i class="fa fa-search text-4xl text-gray/30 mb-4"></i>
       <h3 class="text-xl font-bold mb-2" data-i18n="detail.empty.title">未找到该术语</h3>
       <p class="text-gray" data-i18n="detail.empty.desc">请尝试更换关键词，或检查输入是否正确</p>
-      <button onclick="location.href='index.html'" class="mt-6 px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors">
+      <button onclick="location.href='index.html'"
+        class="mt-6 px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors">
         <span data-i18n="detail.back.home">返回首页</span>
       </button>
     </div>
@@ -125,9 +129,9 @@
   <script>
     // 三语数据（新增详情页文案）
     const i18nData = {
-      "zh-CN": {"nav.home":"首页","nav.fields":"领域库","nav.favorite":"收藏","nav.about":"关于","footer":"TriLingPro Dictionary © 2026 — 专业三语术语工具","detail.back":"返回","detail.definition":"专业释义","detail.example":"权威例句","detail.copy":"复制释义","detail.favorite":"收藏术语","detail.empty.title":"未找到该术语","detail.empty.desc":"请尝试更换关键词，或检查输入是否正确","detail.back.home":"返回首页"},
-      "en": {"nav.home":"Home","nav.fields":"Fields","nav.favorite":"Favorites","nav.about":"About","footer":"TriLingPro Dictionary © 2026 — Professional Trilingual Terminology Tool","detail.back":"Back","detail.definition":"Definition","detail.example":"Example","detail.copy":"Copy","detail.favorite":"Favorite","detail.empty.title":"Term Not Found","detail.empty.desc":"Please try another keyword or check your input","detail.back.home":"Back to Home"},
-      "es": {"nav.home":"Inicio","nav.fields":"Campos","nav.favorite":"Favoritos","nav.about":"Acerca","footer":"TriLingPro Dictionary © 2026 — Herramienta de terminología trilingüe profesional","detail.back":"Volver","detail.definition":"Definición","detail.example":"Ejemplo","detail.copy":"Copiar","detail.favorite":"Guardar","detail.empty.title":"Término no encontrado","detail.empty.desc":"Intente con otra palabra o verifique la entrada","detail.back.home":"Volver al inicio"}
+      "zh-CN": { "nav.home": "首页", "nav.fields": "领域库", "nav.favorite": "收藏", "nav.about": "关于", "footer": "TriLingPro Dictionary © 2026 — 专业三语术语工具", "detail.back": "返回", "detail.definition": "专业释义", "detail.example": "权威例句", "detail.copy": "复制释义", "detail.favorite": "收藏术语", "detail.empty.title": "未找到该术语", "detail.empty.desc": "请尝试更换关键词，或检查输入是否正确", "detail.back.home": "返回首页" },
+      "en": { "nav.home": "Home", "nav.fields": "Fields", "nav.favorite": "Favorites", "nav.about": "About", "footer": "TriLingPro Dictionary © 2026 — Professional Trilingual Terminology Tool", "detail.back": "Back", "detail.definition": "Definition", "detail.example": "Example", "detail.copy": "Copy", "detail.favorite": "Favorite", "detail.empty.title": "Term Not Found", "detail.empty.desc": "Please try another keyword or check your input", "detail.back.home": "Back to Home" },
+      "es": { "nav.home": "Inicio", "nav.fields": "Campos", "nav.favorite": "Favoritos", "nav.about": "Acerca", "footer": "TriLingPro Dictionary © 2026 — Herramienta de terminología trilingüe profesional", "detail.back": "Volver", "detail.definition": "Definición", "detail.example": "Ejemplo", "detail.copy": "Copiar", "detail.favorite": "Guardar", "detail.empty.title": "Término no encontrado", "detail.empty.desc": "Intente con otra palabra o verifique la entrada", "detail.back.home": "Volver al inicio" }
     };
 
     let termData = [];
@@ -145,7 +149,7 @@
       if (!currentTerm) return;
       const favs = getFavorites();
       const zh = currentTerm.zh;
-      const newFavs = favs.includes(zh) ? favs.filter(x => x!=zh) : [...favs, zh];
+      const newFavs = favs.includes(zh) ? favs.filter(x => x != zh) : [...favs, zh];
       localStorage.setItem('favorites', JSON.stringify(newFavs));
       refreshFavUI();
     }
@@ -158,7 +162,7 @@
       icon.className = ok ? 'fa fa-heart' : 'fa fa-heart-o';
       text.innerText = ok ? '已收藏' : '收藏术语';
     }
-    
+
     async function loadTermData() {
       try {
         const response = await fetch('term-data.json');
@@ -206,7 +210,7 @@
       const termCard = document.getElementById('termCard');
       const emptyTip = document.getElementById('emptyTip');
 
-      if(!keyword) {
+      if (!keyword) {
         emptyTip.classList.remove('hidden');
         termCard.style.opacity = '1';
         return;
@@ -221,13 +225,13 @@
       }
 
       // 匹配术语（支持中英西三语模糊搜索）
-      const term = termData.find(item => 
-        item.zh.includes(keyword) || 
-        item.en.toLowerCase().includes(keyword.toLowerCase()) || 
+      const term = termData.find(item =>
+        item.zh.includes(keyword) ||
+        item.en.toLowerCase().includes(keyword.toLowerCase()) ||
         item.es.toLowerCase().includes(keyword.toLowerCase())
       );
 
-      if(term) {
+      if (term) {
         currentTerm = term;
         document.getElementById('zhTerm').innerText = term.zh;
         document.getElementById('enTerm').innerText = term.en;
@@ -259,4 +263,5 @@
     });
   </script>
 </body>
+
 </html>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -38,9 +39,10 @@
     }
   </style>
 </head>
+
 <body class="bg-neutral min-h-screen text-dark">
 
-<nav class="w-full bg-white py-4 px-6 md:px-12 flex justify-between items-center card-shadow">
+  <nav class="w-full bg-white py-4 px-6 md:px-12 flex justify-between items-center card-shadow">
     <div class="text-xl font-semibold text-primary flex items-center gap-2">
       <i class="fa fa-language"></i>
       <span>TriLingPro</span>
@@ -63,88 +65,89 @@
     </button>
   </nav>
 
-<main class="max-w-4xl mx-auto px-6 pt-12 pb-20">
-  <div class="flex justify-between items-center mb-8">
-    <h1 class="text-2xl font-bold flex items-center gap-2">
-      <i class="fa fa-heart text-primary"></i>
-      <span data-i18n="fav.title">我的收藏</span>
-    </h1>
-    <button id="clearAll" class="text-sm text-red-500 hover:text-red-600" data-i18n="fav.clearall">
-      清空收藏
-    </button>
-  </div>
+  <main class="max-w-4xl mx-auto px-6 pt-12 pb-20">
+    <div class="flex justify-between items-center mb-8">
+      <h1 class="text-2xl font-bold flex items-center gap-2">
+        <i class="fa fa-heart text-primary"></i>
+        <span data-i18n="fav.title">我的收藏</span>
+      </h1>
+      <button id="clearAll" class="text-sm text-red-500 hover:text-red-600" data-i18n="fav.clearall">
+        清空收藏
+      </button>
+    </div>
 
-  <div id="emptyView" class="text-center py-20 text-gray">
-    <i class="fa fa-heart-o text-4xl mb-4 opacity-30"></i>
-    <p class="text-lg" data-i18n="fav.empty">暂无收藏术语</p>
-    <a href="index.html" class="inline-block mt-6 px-5 py-2 bg-primary text-white rounded-lg" data-i18n="searchforVocabulary">
-      去搜索词汇
-    </a>
-  </div>
+    <div id="emptyView" class="text-center py-20 text-gray">
+      <i class="fa fa-heart-o text-4xl mb-4 opacity-30"></i>
+      <p class="text-lg" data-i18n="fav.empty">暂无收藏术语</p>
+      <a href="index.html" class="inline-block mt-6 px-5 py-2 bg-primary text-white rounded-lg"
+        data-i18n="searchforVocabulary">
+        去搜索词汇
+      </a>
+    </div>
 
-  <div id="favList" class="grid gap-3"></div>
-</main>
+    <div id="favList" class="grid gap-3"></div>
+  </main>
 
-<script>
-let termData = [];
-let currentLang = localStorage.getItem('triLangProLang') || 'zh-CN';
+  <script>
+    let termData = [];
+    let currentLang = localStorage.getItem('triLangProLang') || 'zh-CN';
 
-const i18nData = {
-  "zh-CN": {"nav.home":"首页","nav.fields":"领域库","nav.favorite":"收藏","nav.about":"关于","fav.title":"我的收藏", "fav.empty":"暂无收藏术语", "fav.clearall":"清空收藏", "searchforVocabulary":"去搜索词汇", "unfavorite":"取消收藏", "favorite.clear.confirm": "确定要清空所有收藏吗？"},
-  "en": {"nav.home":"Home","nav.fields":"Fields","nav.favorite":"Favorites","nav.about":"About","fav.title":"My Favorites", "fav.empty":"No favorites yet", "fav.clearall":"Clear favorites", "searchforVocabulary":"search for vocabulary", "unfavorite":"Unfavorite", "favorite.clear.confirm": "Are you sure you want to clear all favorites?"},
-  "es": {"nav.home":"Inicio","nav.fields":"Campos","nav.favorite":"Favoritos","nav.about":"Acerca","fav.title":"Mis Favoritos", "fav.empty":"Sin favoritos", "fav.clearall":"Vaciar favoritos", "searchforVocabulary":"Ir a buscar palabras", "unfavorite":"Cancelar colección", "favorite.clear.confirm": "¿Está seguro de que desea vaciar todos los favoritos?"}
-};
+    const i18nData = {
+      "zh-CN": { "nav.home": "首页", "nav.fields": "领域库", "nav.favorite": "收藏", "nav.about": "关于", "fav.title": "我的收藏", "fav.empty": "暂无收藏术语", "fav.clearall": "清空收藏", "searchforVocabulary": "去搜索词汇", "unfavorite": "取消收藏", "favorite.clear.confirm": "确定要清空所有收藏吗？" },
+      "en": { "nav.home": "Home", "nav.fields": "Fields", "nav.favorite": "Favorites", "nav.about": "About", "fav.title": "My Favorites", "fav.empty": "No favorites yet", "fav.clearall": "Clear favorites", "searchforVocabulary": "search for vocabulary", "unfavorite": "Unfavorite", "favorite.clear.confirm": "Are you sure you want to clear all favorites?" },
+      "es": { "nav.home": "Inicio", "nav.fields": "Campos", "nav.favorite": "Favoritos", "nav.about": "Acerca", "fav.title": "Mis Favoritos", "fav.empty": "Sin favoritos", "fav.clearall": "Vaciar favoritos", "searchforVocabulary": "Ir a buscar palabras", "unfavorite": "Cancelar colección", "favorite.clear.confirm": "¿Está seguro de que desea vaciar todos los favoritos?" }
+    };
 
-document.documentElement.lang = currentLang;
+    document.documentElement.lang = currentLang;
 
-// 渲染语言
-function renderLanguage() {
-    const elements = document.querySelectorAll('[data-i18n]');
-    elements.forEach(el => {
-    const key = el.getAttribute('data-i18n');
-    if (i18nData[currentLang][key]) el.innerHTML = i18nData[currentLang][key];
-    });
-}
+    // 渲染语言
+    function renderLanguage() {
+      const elements = document.querySelectorAll('[data-i18n]');
+      elements.forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (i18nData[currentLang][key]) el.innerHTML = i18nData[currentLang][key];
+      });
+    }
 
-// 切换语言
-function changeLanguage(lang) {
-    currentLang = lang;
-    localStorage.setItem('triLangProLang', lang);
-    document.documentElement.lang = lang;
-    renderLanguage();
-}
+    // 切换语言
+    function changeLanguage(lang) {
+      currentLang = lang;
+      localStorage.setItem('triLangProLang', lang);
+      document.documentElement.lang = lang;
+      renderLanguage();
+    }
 
-function getFavorites() {
-  return JSON.parse(localStorage.getItem('favorites') || '[]');
-}
+    function getFavorites() {
+      return JSON.parse(localStorage.getItem('favorites') || '[]');
+    }
 
-function removeFavorite(zh) {
-  let favs = getFavorites();
-  favs = favs.filter(item => item !== zh);
-  localStorage.setItem('favorites', JSON.stringify(favs));
-  renderFavList();
-}
+    function removeFavorite(zh) {
+      let favs = getFavorites();
+      favs = favs.filter(item => item !== zh);
+      localStorage.setItem('favorites', JSON.stringify(favs));
+      renderFavList();
+    }
 
-async function loadTermData() {
-  const res = await fetch('./term-data.json');
-  termData = await res.json();
-  renderFavList();
-}
+    async function loadTermData() {
+      const res = await fetch('./term-data.json');
+      termData = await res.json();
+      renderFavList();
+    }
 
-function renderFavList() {
-  const favs = getFavorites();
-  const list = termData.filter(t => favs.includes(t.zh));
-  const box = document.getElementById('favList');
-  const empty = document.getElementById('emptyView');
+    function renderFavList() {
+      const favs = getFavorites();
+      const list = termData.filter(t => favs.includes(t.zh));
+      const box = document.getElementById('favList');
+      const empty = document.getElementById('emptyView');
 
-  if (list.length === 0) {
-    empty.classList.remove('hidden');
-    box.innerHTML = '';
-    return;
-  }
+      if (list.length === 0) {
+        empty.classList.remove('hidden');
+        box.innerHTML = '';
+        return;
+      }
 
-  empty.classList.add('hidden');
-  box.innerHTML = list.map(t => `
+      empty.classList.add('hidden');
+      box.innerHTML = list.map(t => `
     <div class="term-item flex justify-between items-center">
       <div onclick="location.href='detail.html?keyword=${encodeURIComponent(t.zh)}'">
         <div class="font-bold text-lg">${t.zh}</div>
@@ -155,21 +158,22 @@ function renderFavList() {
       </button>
     </div>
   `).join('');
-}
+    }
 
-document.getElementById('clearAll').onclick = () => {
-  const confirmText = i18nData[currentLang]?.['favorite.clear.confirm'];
+    document.getElementById('clearAll').onclick = () => {
+      const confirmText = i18nData[currentLang]?.['favorite.clear.confirm'];
 
-  if (confirmText && confirm(confirmText)) {
-    localStorage.setItem('favorites', '[]');
-    renderFavList();
-  }
-};
+      if (confirmText && confirm(confirmText)) {
+        localStorage.setItem('favorites', '[]');
+        renderFavList();
+      }
+    };
 
-window.addEventListener('DOMContentLoaded', async () => {
-  renderLanguage();
-  await loadTermData();
-});
-</script>
+    window.addEventListener('DOMContentLoaded', async () => {
+      renderLanguage();
+      await loadTermData();
+    });
+  </script>
 </body>
+
 </html>
